@@ -11,13 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="添加图书"/>
+        android:text="添加图书" />
+
+    <Button
+        android:id="@+id/btn_add_book_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/btn_add_book"
+        android:text="添加图书In" />
+
+    <Button
+        android:id="@+id/btn_add_book_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/btn_add_book_in"
+        android:text="添加图书Out" />
 
     <Button
         android:id="@+id/btn_get_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btn_add_book_out"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/btn_add_book"
-        android:text="获取图书列表"/>
+        android:text="获取图书列表" />
 </RelativeLayout>

@@ -12,8 +12,19 @@ import android.os.Parcelable;
  ***/
 public class Book implements Parcelable {
     private String name;
+    private String action;
+    public Book() {
+    }
     public Book(Parcel in) {
         this.name = in.readString();
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public Book(String name) {
@@ -48,9 +59,11 @@ public class Book implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(action);
     }
 
     void readFromParcel(Parcel parcel) {
-        parcel.writeString(name);
+        name = parcel.readString();
+        action = parcel.readString();
     }
 }

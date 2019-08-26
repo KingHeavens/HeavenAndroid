@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         bindBookService();
         findViewById(R.id.btn_add_book).setOnClickListener(this);
+        findViewById(R.id.btn_add_book_out).setOnClickListener(this);
         findViewById(R.id.btn_get_book).setOnClickListener(this);
+        findViewById(R.id.btn_add_book_in).setOnClickListener(this);
     }
 
     private void bindBookService() {
@@ -62,7 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btn_add_book: {
                 try {
-                    mServiceBookManager.addBook(new Book(" 《小红马》"));
+                    Book book = new Book("《小红马》");
+                    mServiceBookManager.addBook(book);
+                    showLog("addBook Action:" + book.getAction());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -74,6 +78,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (Book book : bookList) {
                         showLog(book.getName() + " ");
                     }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case R.id.btn_add_book_in: {
+                try {
+                    Book book = new Book("《In》");
+                    mServiceBookManager.addBookIn(book);
+                    showLog("addBookIn Action:" + book.getAction());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case R.id.btn_add_book_out: {
+                try {
+                    Book book = new Book("《Out》");
+                    mServiceBookManager.addBookOut(book);
+                    showLog("addBookOut Action:" + book.getAction());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
