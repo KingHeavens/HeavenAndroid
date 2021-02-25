@@ -1,28 +1,61 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
 
+def appConfig = rootProject.ext.app
 android {
-    compileSdkVersion 28
+    compileSdkVersion appConfig.compileSdkVersion
+    buildToolsVersion appConfig.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.heaven.android"
-        minSdkVersion 21
-        targetSdkVersion 28
+        applicationId appConfig.applicationId
+        minSdkVersion appConfig.minSdkVersion
+        targetSdkVersion appConfig.targetSdkVersion
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName appConfig.versionName
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
+def commonDependencies = rootProject.ext.commonDependencies
+def commonDebugDependencies = rootProject.ext.commonDebugDependencies
+def commonProcessors = rootProject.ext.commonProcessors
+def commonExcludes = rootProject.ext.commonExcludes
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+
+    commonDependencies.each {
+        implementation it
+    }
+
+    commonDebugDependencies.each {
+        debugImplementation it
+    }
+
+    commonProcessors.each {
+        annotationProcessor it
+    }
+
+    commonExcludes.each { entry ->
+        implementation(entry.key) {
+            entry.value.each { childEntry ->
+                exclude(group: childEntry)
+            }
+        }
+    }
+
+    implementation project(path: ":lib_base")
+    implementation project(path: ':lib_media')
 }

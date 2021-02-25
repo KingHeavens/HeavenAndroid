@@ -1,0 +1,28 @@
+ext {
+    app = [
+            applicationId    : "top.heavens",
+            compileSdkVersion: 30,
+            buildToolsVersion: "30.0.3",
+            minSdkVersion    : 22,
+            targetSdkVersion : 30,
+            versionName      : "1.0"
+    ]
+    commonDependencies = [
+            'androidx.appcompat:appcompat:1.2.0',
+            'androidx.core:core-ktx:1.3.2',
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    ]
+
+    commonDebugDependencies = [
+    ]
+
+    commonProcessors = [
+    ]
+
+    commonExcludes = [
+    ]
+
+    plugin = [
+
+    ]
+}

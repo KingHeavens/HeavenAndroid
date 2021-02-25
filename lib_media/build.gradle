@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+def appConfig = rootProject.ext.app
+android {
+    compileSdkVersion appConfig.compileSdkVersion
+    buildToolsVersion appConfig.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion appConfig.minSdkVersion
+        targetSdkVersion appConfig.targetSdkVersion
+        versionCode appConfig.versionCode
+        versionName appConfig.versionName
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+def commonDependencies = rootProject.ext.commonDependencies
+def commonDebugDependencies = rootProject.ext.commonDebugDependencies
+def commonProcessors = rootProject.ext.commonProcessors
+def commonExcludes = rootProject.ext.commonExcludes
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+
+    commonDependencies.each {
+        implementation it
+    }
+
+    commonDebugDependencies.each {
+        debugImplementation it
+    }
+
+    commonProcessors.each {
+        annotationProcessor it
+    }
+
+    commonExcludes.each { entry ->
+        implementation(entry.key) {
+            entry.value.each { childEntry ->
+                exclude(group: childEntry)
+            }
+        }
+    }
+
+    implementation project(path: ":lib_base")
+}

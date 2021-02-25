@@ -1,1 +1,5 @@
+include ':lib_media'
+include ':lib_base'
 include ':app'
+rootProject.name = "HeavensAndroid"
+//project(':app').projectDir = new File("./...") // 指定子模块的目录位置
